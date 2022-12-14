@@ -12,6 +12,8 @@ public class simu : MonoBehaviour
     Rigidbody rb;
     public GameObject obj;
     GameObject ob;
+    public int a=0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,16 +24,25 @@ public class simu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(a);
+        a = 0;
         tensor = rb.inertiaTensor;
         masp = rb.centerOfMass;
     }
     void OnCollisionStay(Collision collision)
     {
-        Destroy(ob);
         vecf = collision.impulse;
         contpnt = collision.contacts[0].point;
-        ob = (GameObject)Instantiate(obj, collision.contacts[0].point, Quaternion.identity);
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            // Visualize the contact point
+            Debug.DrawRay(contact.point, contact.normal, Color.black);
+            Debug.Log(contact.otherCollider.name);
+            a++;
+        }
+        //for(int i = 0;collision.contacts[i].point != null&& i < 100; i++)
+        //Instantiate(obj, collision.contacts[i].point, Quaternion.identity);
         force = collision.impulse.magnitude/Time.deltaTime;
-        Debug.DrawRay(contpnt,vecf*3, Color.red,0.0f,false);
+            Debug.DrawRay(transform.TransformPoint(masp), collision.impulse* 3, Color.red,0.0f,false);
     }
 }
