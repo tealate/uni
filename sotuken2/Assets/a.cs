@@ -6,7 +6,7 @@ public class a : MonoBehaviour
 {
     // Start is called before the first frame update
     const float targetVelocity = 2;
-    const float power = 50;
+    const float power = 0.6f;
     Rigidbody rb;
     /*public Vector3 contpnt;
     public GameObject obj;
