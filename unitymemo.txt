@@ -1,0 +1,4 @@
+rigidbody.centerOfMass 重心
+collision.contacts[].point 接触座標
+collision.contacts[].impulse 接触点の合計インパ
+target.GetComponent<tcomp>(); オブジェクトtargetからtcompのコンポ取得

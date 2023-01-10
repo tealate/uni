@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class sim : MonoBehaviour
 {
-    public Vector3 tensor;
     public Vector3 contpnt; //接触位置
     public Vector3 masp;  //重心
     public Vector3 vecf; //接触位置のベクトル
@@ -12,24 +11,19 @@ public class sim : MonoBehaviour
     Rigidbody rb;
     public GameObject obj;
     GameObject ob;
-    public int a = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        //GameObject obj = (GameObject)Resources.Load("colid");
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        Debug.Log(a);
-        a = 0;
-        tensor = rb.inertiaTensor;
         masp = rb.centerOfMass;
     }
-    void OnCollisionStay(Collision collision)
+    /*void OnTriggerStay(Collider other)
     {
         vecf = collision.impulse;
         contpnt = collision.contacts[0].point;
@@ -42,5 +36,10 @@ public class sim : MonoBehaviour
         }
         force = collision.impulse.magnitude / Time.deltaTime;
         //Debug.DrawRay(transform.TransformPoint(masp), collision.impulse* 3, Color.red,0.0f,false);
+    } */
+    void OnTriggerStay(Collider other)
+    {
+        UnityEditor.EditorApplication.isPaused = true;
+        Debug.DrawRay(other.ClosestPointOnBounds(this.transform.position), new Vector3(1,1,1), Color.red, 0.0f, false);
     }
 }

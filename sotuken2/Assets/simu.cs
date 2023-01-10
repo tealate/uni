@@ -40,10 +40,11 @@ public class simu : MonoBehaviour
         {
             // Visualize the contact point
             Debug.DrawRay(contact.point, contact.normal, Color.black);
+            Debug.DrawRay(contact.point, contact.impulse * 3, Color.red, 0.0f, false);
             //Debug.Log(contact.otherCollider.name);
             cont++;
         }
         force = collision.impulse.magnitude/Time.deltaTime;
-            //Debug.DrawRay(transform.TransformPoint(masp), collision.impulse* 3, Color.red,0.0f,false);
+            Debug.DrawRay(transform.TransformPoint(masp), collision.impulse* 3, Color.red,0.0f,false);
     }
 }
