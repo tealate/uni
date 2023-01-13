@@ -39,7 +39,7 @@ public class sim : MonoBehaviour
     } */
     void OnTriggerStay(Collider other)
     {
-        UnityEditor.EditorApplication.isPaused = true;
+        //UnityEditor.EditorApplication.isPaused = true;
         Debug.DrawRay(other.ClosestPointOnBounds(this.transform.position), new Vector3(1,1,1), Color.red, 0.0f, false);
     }
 }

@@ -2,3 +2,6 @@ rigidbody.centerOfMass 重心
 collision.contacts[].point 接触座標
 collision.contacts[].impulse 接触点の合計インパ
 target.GetComponent<tcomp>(); オブジェクトtargetからtcompのコンポ取得
+enterとstayでは別の値が入っている。よく考えたら当然
+worldPoint = transform.TransformPoint(localTarget);　ローカル→ワールド変換
+localPoint = transform.InverseTransformPoint(worldTarget);ワールド→ローカル変換

@@ -33,7 +33,7 @@ public class simu : MonoBehaviour
     }
     void OnCollisionStay(Collision collision)
     {
-        Debug.Log("a");
+        
         vecf = collision.impulse;
         contpnt = collision.contacts[0].point;
         foreach (ContactPoint contact in collision.contacts)
@@ -41,7 +41,7 @@ public class simu : MonoBehaviour
             // Visualize the contact point
             Debug.DrawRay(contact.point, contact.normal, Color.black);
             Debug.DrawRay(contact.point, contact.impulse * 3, Color.red, 0.0f, false);
-            //Debug.Log(contact.otherCollider.name);
+            //Debug.Log(contact.point);
             cont++;
         }
         force = collision.impulse.magnitude/Time.deltaTime;

@@ -17,21 +17,19 @@ public class a : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(Input.GetKey(KeyCode.UpArrow))
-            rb.AddForce(new Vector3(0, 1, 0) * ((targetVelocity - rb.velocity.y) * power), ForceMode.Acceleration);
+            rb.AddForce(new Vector3(0, 1, 0) * ((targetVelocity - rb.velocity.y) * power), ForceMode.Impulse);
         if (Input.GetKey(KeyCode.DownArrow))
-            rb.AddForce(new Vector3(0, -1, 0) * ((targetVelocity + rb.velocity.y) * power), ForceMode.Acceleration);
+            rb.AddForce(new Vector3(0, -1, 0) * ((targetVelocity + rb.velocity.y) * power), ForceMode.Impulse);
         if (Input.GetKey(KeyCode.LeftArrow))
-            rb.AddForce(new Vector3(-1, 0, 0) * ((targetVelocity + rb.velocity.x) * power), ForceMode.Acceleration);
+            rb.AddForce(new Vector3(-1, 0, 0) * ((targetVelocity + rb.velocity.x) * power), ForceMode.Impulse);
         if (Input.GetKey(KeyCode.RightArrow))
-            rb.AddForce(new Vector3(1, 0, 0) * ((targetVelocity - rb.velocity.x) * power), ForceMode.Acceleration);
+            rb.AddForce(new Vector3(1, 0, 0) * ((targetVelocity - rb.velocity.x) * power), ForceMode.Impulse);
     }
-    /*void OnCollisionEnter(Collision collision)
+    void OnTriggerStay(Collider other)
     {
-        Destroy(ob);
-        contpnt = collision.contacts[0].point;
-        ob = (GameObject)Instantiate(obj, collision.contacts[0].point, Quaternion.identity);
-    }*/
+        Debug.DrawRay(other.ClosestPointOnBounds(this.transform.position), new Vector3(1, 1, 1), Color.red, 0.0f, false);
+    }
 }
