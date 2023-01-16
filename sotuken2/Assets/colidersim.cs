@@ -5,9 +5,9 @@ using UnityEngine;
 public class colidersim : MonoBehaviour
 {
     public List<ContactPoint> colp = new List<ContactPoint>();//接触位置の情報リスト
-    public Vector3 sumforce = Vector3.zero; //すべてのベクトルの合成値(作用点は重心)
-    public Vector3 sumpos = Vector3.zero;//すべての力の合力の着力点
-    public float totalForceMagnitude = 0;
+    //public Vector3 sumforce = Vector3.zero; //すべてのベクトルの合成値(作用点は重心)
+    //public Vector3 sumpos = Vector3.zero;//すべての力の合力の着力点
+    public (Vector3, Vector3) posfos;//ベクトル、着力点まとめたやつ（二度手間）
     Rigidbody rb;//自分のrigid入れるやつ
     public GameObject tric;//反映させるCube
     public Rigidbody tri; //反映させるCubeのrigid
@@ -22,27 +22,14 @@ public class colidersim : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         del = this.transform.position - tric.transform.position;
         rb.sleepThreshold = -1;
+        //Debug.Log(transform.TransformPoint(new Vector3(1,1,1)));
+        Debug.Log(transform.InverseTransformPoint(new Vector3(10, 10, 10)));
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (colp.Count != 0)
-        {
-            sumforce = Vector3.zero;
-            sumpos = Vector3.zero;
-            foreach (ContactPoint cont in colp)
-            {
-                sumforce += cont.impulse;
-                sumpos += cont.point * cont.impulse.magnitude;
-                totalForceMagnitude += cont.impulse.magnitude;
-                Debug.DrawRay(cont.point, cont.impulse * 5, Color.red, 0.0f, false);
-            }
-            sumpos = sumpos / totalForceMagnitude;
-            Debug.DrawRay(sumpos,sumforce*5,Color.green,0.0f,false);
-            tri.AddForceAtPosition(sumforce,sumpos-del,ForceMode.Impulse);
-        }
-        colp.Clear();
+        posfos = impsim();
     }
     void OnCollisionStay(Collision collision)
     {
@@ -57,5 +44,35 @@ public class colidersim : MonoBehaviour
         {
             colp.Add(contact);
         }
+    }
+    public (Vector3, Vector3) impsim()//インパルス情報から計測するやつ
+    {
+        Vector3 sumforce = Physics.gravity*Time.fixedDeltaTime;//初期値で重力先入れ
+        Vector3 sumpos = rb.centerOfMass * Physics.gravity.magnitude* Time.fixedDeltaTime;
+        float totalForceMagnitude = Physics.gravity.magnitude* Time.fixedDeltaTime;
+        if (colp.Count != 0)
+        {
+            foreach (ContactPoint cont in colp)
+            {
+                sumforce += cont.impulse;
+                sumpos += cont.point * cont.impulse.magnitude;
+                totalForceMagnitude += cont.impulse.magnitude;
+                Debug.DrawRay(cont.point, cont.impulse * 5, Color.red, 0.0f, false);
+            }
+            sumpos = sumpos / totalForceMagnitude;
+            Debug.DrawRay(sumpos, sumforce * 5, Color.green, 0.0f, false);
+            tri.AddForceAtPosition(sumforce, sumpos - del, ForceMode.Impulse);
+        }
+        colp.Clear();
+        return (sumforce, sumpos);
+    }
+    /*public (Vector3, Vector3) possim()//接触座標から計算するやつ
+    {
+
+    }*/
+    void move(Vector3 force,Vector3 pos)//加えた力の合力（ベクトル、座標）から移動地点を決める
+    {
+        Vector3 forcepointvec = pos - rb.centerOfMass;
+
     }
 }

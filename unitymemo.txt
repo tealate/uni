@@ -5,3 +5,5 @@ target.GetComponent<tcomp>(); オブジェクトtargetからtcompのコンポ取
 enterとstayでは別の値が入っている。よく考えたら当然
 worldPoint = transform.TransformPoint(localTarget);　ローカル→ワールド変換
 localPoint = transform.InverseTransformPoint(worldTarget);ワールド→ローカル変換
+
+相手の中心座標(world)とる、local変換、正規化する、中心から一番遠い頂点のmagnitude掛ける、scaleを掛ける

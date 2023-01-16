@@ -1,0 +1,26 @@
+Vector3のリストを受け取って、そのリストで表される多角形にeが含まれるかを確かめるには、リスト内の各頂点からなる三角形の面にeが含まれるかを判断することで実現できます。
+
+例えば、以下のように書くことができます
+
+Copy code
+List<Vector3> polygon = new List<Vector3> { a, b, c, d, ... };
+
+bool isContained = true;
+for (int i = 0; i < polygon.Count - 2; i++)
+{
+    Vector3 normal = Vector3.Cross(polygon[i + 1] - polygon[i], polygon[i + 2] - polygon[i]).normalized;
+    float distance = Vector3.Dot(normal, polygon[i] - e);
+    if (distance > 0.01f)
+    {
+        isContained = false;
+        break;
+    }
+}
+if (isContained)
+{
+    // eはpolygonという多角形に含まれる
+}
+else
+{
+    // eはpolygonという多角形に含まれない
+}
