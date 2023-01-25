@@ -6,4 +6,10 @@ enterとstayでは別の値が入っている。よく考えたら当然
 worldPoint = transform.TransformPoint(localTarget);　ローカル→ワールド変換
 localPoint = transform.InverseTransformPoint(worldTarget);ワールド→ローカル変換
 
-相手の中心座標(world)とる、local変換、正規化する、中心から一番遠い頂点のmagnitude掛ける、scaleを掛ける
+相手の中心座標(world)とる、local変換、正規化する、中心から一番遠い頂点のmagnitude掛ける、scaleを掛ける,mgnitude変換
+
+((scale
+(scale, ((自分の中心座標+(1,1,1)のlocal)正規化)))world変換
+
+自分の中心座標+(1,1,1)のlocal変換、正規化、scale掛ける
+Detb = (Vector3.Scale(AllObjList[j].Trans.localScale, (AllObjList[j].Trans.InverseTransformPoint(AllObjList[j].Trans.position+Vector3.one)).normalized))* AllObjList[j].Detrange;

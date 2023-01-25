@@ -23,7 +23,28 @@ public class colidersim : MonoBehaviour
         del = this.transform.position - tric.transform.position;
         rb.sleepThreshold = -1;
         //Debug.Log(transform.TransformPoint(new Vector3(1,1,1)));
-        Debug.Log(transform.InverseTransformPoint(new Vector3(10, 10, 10)));
+        //Debug.Log(transform.InverseTransformPoint(new Vector3(10, 10, 10)));
+        //tamesiList.Add(new tamesi(3));
+        //Debug.Log(yobidasiList[0].b);
+    }
+    public class tamesi
+    {
+        int a;
+        public tamesi(int a)
+        {
+            this.a = a;
+            yobidasiList.Add(new yobidasi(tamesiList.Count));
+        }
+    }
+    public static List<tamesi> tamesiList = new List<tamesi>();
+    public static List<yobidasi> yobidasiList = new List<yobidasi>();
+    public class yobidasi
+    {
+        public int b;
+        public yobidasi(int b)
+        {
+            this.b = b;
+        }
     }
 
     // Update is called once per frame

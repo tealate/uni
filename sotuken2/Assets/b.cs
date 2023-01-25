@@ -5,33 +5,25 @@ using UnityEngine;
 public class b : MonoBehaviour
 {
     // Start is called before the first frame update
-    const float targetVelocity = 2;
-    const float power = 20;
-    Rigidbody rb;
-    /*public Vector3 contpnt;
     public GameObject obj;
-    GameObject ob;*/
+    public Vector3 a;
+    GameObject ob;
+    // Update is called once per frame
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        a = transform.position;
     }
-
-    // Update is called once per frame
     void Update()
-    {
-        if (Input.GetKey(KeyCode.UpArrow))
-            rb.AddForce(new Vector3(0, 1, 0) * ((targetVelocity - rb.velocity.y) * power), ForceMode.Acceleration);
+        {
+            if (Input.GetKey(KeyCode.UpArrow))
+            a += (new Vector3(0, 0.02f, 0));
         if (Input.GetKey(KeyCode.DownArrow))
-            rb.AddForce(new Vector3(0, -1, 0) * ((targetVelocity + rb.velocity.y) * power), ForceMode.Acceleration);
+            a += (new Vector3(0, -0.02f, 0));
         if (Input.GetKey(KeyCode.LeftArrow))
-            rb.AddForce(new Vector3(-1, 0, 0) * ((targetVelocity + rb.velocity.x) * power), ForceMode.Acceleration);
+            a += (new Vector3(-0.02f, 0, 0));
         if (Input.GetKey(KeyCode.RightArrow))
-            rb.AddForce(new Vector3(1, 0, 0) * ((targetVelocity - rb.velocity.x) * power), ForceMode.Acceleration);
+            a += (new Vector3(0.02f, 0, 0));
+        transform.position = a;
     }
-    /*void OnCollisionEnter(Collision collision)
-    {
-        Destroy(ob);
-        contpnt = collision.contacts[0].point;
-        ob = (GameObject)Instantiate(obj, collision.contacts[0].point, Quaternion.identity);
-    }*/
 }
+
